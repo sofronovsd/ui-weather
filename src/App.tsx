@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import { Card, Layout } from "antd";
+import Search from "antd/es/input/Search";
 
-function App() {
+const App = () => {
+  const [info, setInfo] = useState({ title: "" });
+  const searchWeather = async (value: string) => {
+    const request = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?q=${value}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
+    );
+    const result = await request.json();
+    // @ts-ignore
+    const city = result.city;
+    console.log(result);
+    setInfo({
+      title: city ? `${city?.country}, ${city?.name}` : "",
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout className="layout">
+      <Layout.Header>
+        <h1 className="logo">UI Weather</h1>
+      </Layout.Header>
+      <Layout.Content style={{ padding: "2rem" }}>
+        <Search placeholder="Input location" onSearch={searchWeather} />
+        <Card title={info.title} bordered={false} style={{ marginTop: "1rem" }}>
+          <p>Card content</p>
+          <p>Card content</p>
+          <p>Card content</p>
+        </Card>
+      </Layout.Content>
+      <Layout.Footer>
+        <div className="footer__text">Made by Semyon Sofronov</div>
+      </Layout.Footer>
+    </Layout>
   );
-}
+};
 
 export default App;
