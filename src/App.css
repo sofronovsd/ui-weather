@@ -11,3 +11,8 @@
 .footer__text {
   text-align: right;
 }
+
+.description {
+  color: #bfbfbf;
+  font-size: 0.8rem;
+}
