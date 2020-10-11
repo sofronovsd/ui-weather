@@ -28,7 +28,6 @@ const App = () => {
           `https://api.openweathermap.org/data/2.5/weather?q=${value}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
         );
         const result = await request.json();
-        // @ts-ignore
         const title = `${result.name}, ${result.sys.country}`;
         const details = result.main;
         const weather = result.weather[0];
